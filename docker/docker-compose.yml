@@ -1,0 +1,39 @@
+volumes:
+  mysql_data:
+services:
+    nginx:
+      build: ./nginx/
+      ports:
+        - 80:80
+  
+      volumes:
+        - ../html/:/var/www/html/
+
+    php:
+      build: ./php/
+      expose:
+        - 9000
+      volumes:
+        - ../php/:/var/www/html/
+
+    db:
+      image: mariadb:10.6
+      environment:
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      volumes:
+        - mysql_data:/var/lib/mysql
+      ports:
+        - "3366:3306"
+
+
+
+
+
+
+
+
+
+
