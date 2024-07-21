@@ -13,4 +13,5 @@ Assume the project's directory ‘’‘expense_tracker’‘’ is in the root 
 ### icon font
 https://ionic.io/ionicons
 
+### connect to server 
 ssh -i ec2_key.pem ubuntu@18.117.243.201
