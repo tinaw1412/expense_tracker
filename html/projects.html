@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Projects</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-md-12 column">
+            <h3>
+                Project List
+            </h3>
+        </div>
+
+        <div class="col-md-12 column">
+            <table class="table table-striped table-hover" id="projectsTable">
+                <thead>
+                    <tr>
+                        <th>
+                            Project ID
+                        </th>
+                        <th>
+                            Project name
+                        </th>
+                        <th>
+                            Created By User
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            1
+                        </td>
+                        <td>
+                            Go out
+                        </td>
+                        <td>
+                            1
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+        <div class="col-md-12 column">
+            <!--create new project button-->
+            <button type="button" class="btn btn-primary" id="newProjectBtn" data-bs-toggle='modal'
+                data-bs-target="#insertModal">Create new project</button>
+        </div><br>
+        <div class="col-md-12 column">
+            <ul class="pagination" id="projects_pagination">
+                <li class="page-item"><a class="page-link" href="#" id="previousPage">Previous</a></li>
+                <li class="page-item"> <label class="page-link" id="pageInfo">Total 98 (Showing 1-10), Page 1 of
+                        9</label> </li>
+                <li class="page-item"><a class="page-link" href="#" id="nextPage">Next</a></li>
+            </ul>
+        </div>
+
+    </div>
+    <!--delete modal-->
+    <div class="modal" id="deleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm delete</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    Can you confirm to delete this project?
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        id="confirmDeleteBtn">Confirm</button>
+                    <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--insert modal-->
+    <div class="modal" id="insertModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalTitle">Create new project</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <!--create new window-->
+                    <form class="was-validated">
+                        <input type="hidden" id="action">
+
+                        <div class="mb-3 mt-3">
+                            <label for="projectnameInput" class="form-label">Project name:</label>
+                            <input type="text" class="form-control" id="projectnameInput" placeholder="Enter project name"
+                                name="projectname">
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        id="confirmBtn">Save</button>
+                    <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    
+
+</body>
+
+
+<script>
+    var current_project_id = null;
+    var currentPage = 1;
+    var projects = null;
+
+    function addLoading() {
+        $('#projectsTable tbody').empty();
+        let newRow = $('<tr>');
+        let newTd = $('<td>').attr("colspan", "6").attr("align", "center");
+        let newDiv = $('<div>').attr("class", "spinner-border");
+
+        newTd.append(newDiv);
+        newRow.append(newTd);
+        $('#projectsTable tbody').append(newRow);
+
+    }
+
+    function showPage(page) {
+        addLoading();
+
+        $.ajax({
+            type: 'GET',
+            url: 'projects.php?page=' + page,
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+
+                $('#projectsTable tbody').empty();
+
+                projects = data.projects;
+
+                data.projects.forEach(row => {
+                    var newRow = $('<tr>');
+                    newRow.append($('<td>').text(row.project_id));
+                    newRow.append($('<td>').text(row.project_name));
+                    newRow.append($('<td>').text(row.email));
+
+                    $('#projectsTable tbody').append(newRow);
+
+                    // update
+                    var $td = $('<td>');
+                    var $a1 = $("<a></a>")
+                        .attr("href", '#')
+                        .attr("class", "updateLink")
+                        .attr("data-id", row.project_id)
+                        .attr("data-bs-toggle", 'modal')
+                        .attr("data-bs-target", "#insertModal")
+                        .text("Update");
+
+                    $td.append($a1).append("  ");
+
+                    //delete
+                    var $a2 = $("<a></a>")
+                        .attr("href", '#')
+                        .attr("class", "deleteLink")
+                        .attr("data-id", row.project_id)
+                        .attr("data-bs-toggle", "modal")
+                        .attr("data-bs-target", "#deleteModal")
+                        .text("Delete");
+
+                    $td.append($a2);
+
+                    newRow.append($td);
+
+                });
+
+                if (data.pagination.pageNum == 1) {
+                    //$('#users_pagination').empty();
+                }
+
+                if (data.pagination.page == 1) {
+                    $('#previousPage').addClass('disabled');
+                } else {
+                    $('#previousPage').removeClass('disabled');
+
+                }
+                if (data.pagination.page == data.pagination.pageNum) {
+                    $('#nextPage').addClass('disabled');
+                } else {
+                    $('#nextPage').removeClass('disabled');
+                }
+
+                currentPage = data.pagination.page;
+                let start = (currentPage - 1) * data.pagination.size + 1;
+                let end = start - 1 + data.projects.length;
+                $('#pageInfo').text('Total ' + data.pagination.total + ' (Showing ' + start + '-' + end + '), Page ' + currentPage + ' of ' + data.pagination.pageNum);
+                //Total 98 (Showing 1-10), Page 1 of 9
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                jAlert(errorThrown);
+            }
+        });
+    }
+
+    function previousPage() {
+        showPage(currentPage - 1);
+    }
+
+    function nextPage() {
+        showPage(currentPage + 1);
+    }
+
+    function findProject() {
+        let pr = projects.filter(function (p) {
+            return p.project_id == current_project_id;
+        });
+        if (pr.length == 1) {
+            return pr[0];
+        } else {
+            return false;
+        }
+    }
+
+    function updateProject() {
+
+        $.ajax({
+            type: 'POST',
+            url: 'projects.php',
+            data: {
+                action: "update",
+                id: current_project_id,
+                projectname: $("#projectnameInput").val(),
+                
+            },
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                if (data.status == true) {
+                    alert("Successful updated");
+                    showPage(currentPage);
+                } else {
+                    alert(data.msg);
+                }
+
+            }
+        });
+    }
+
+    function deleteProject() {
+        $.ajax({
+            type: 'POST',
+            url: 'projects.php',
+            data: { action: "delete", id: current_project_id },
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                if (data.status == true) {
+                    alert("Successful deleted");
+                    showPage(currentPage);
+                } else {
+                    alert(data.msg);
+                }
+            }
+        });
+    }
+
+    function insertProject() {
+        $.ajax({
+            type: 'POST',
+            url: 'projects.php',
+            data: {
+                action: "new",
+                projectname: $("#projectnameInput").val(),
+            },
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                if (data.status == true) {
+                    alert("Successful added");
+                    showPage(currentPage);
+                } else {
+                    if (data.code==401){
+                        alert("You have to log in")
+                    }
+                }
+
+            }
+        });
+    }
+
+    $(function () {
+        showPage(currentPage);
+
+        $('#previousPage').click(function (e) {
+            e.preventDefault();
+            previousPage();
+        });
+
+        $('#nextPage').click(function (e) {
+            e.preventDefault();
+            nextPage();
+        });
+
+
+        $('#newProjectBtn').click(function (e) {
+            e.preventDefault();
+            $("#action").val("new");
+            $("#modalTitle").text("Create new project");
+            $("#projectnameInput").val(''); 
+        });
+
+
+        $(document).on('click', '.updateLink', function (e) {
+            e.preventDefault();
+            current_project_id = $(this).data('id');
+
+            $("#action").val("update");
+            $("#modalTitle").text("Update project");
+            let project = findProject();
+            if (project !== false) {
+                $("#projectnameInput").val(project.project_name);
+            }
+        });
+
+        $(document).on('click', '.deleteLink', function (e) {
+            e.preventDefault();
+            current_project_id = $(this).data('id');
+        });
+
+        $('#confirmDeleteBtn').click(function (e) {
+            e.preventDefault();
+            deleteProject();
+        });
+
+        $('#confirmBtn').click(function (e) {
+            e.preventDefault();
+            if ($("#action").val() == "update") {
+                updateProject();
+            } else {
+                insertProject();
+
+            }
+        });
+
+    });
+
+</script>
+
+</html>

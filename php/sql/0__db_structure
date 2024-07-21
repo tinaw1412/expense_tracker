@@ -1,0 +1,40 @@
+create table `users` (
+	`user_id` int(11) unsigned NOT NULL AUTO_INCREMENT, 
+    `email` varchar(50) NOT NULL,
+    `full_name` varchar(50) NOT NULL,
+    `password` varchar(255) NOT NULL,
+    `status` tinyint(4) NOT NULL DEFAULT 1,
+    `admin` tinyint(4) NOT NULL DEFAULT 0,
+    `confirmEmailToken` varchar(50) NULL,
+    PRIMARY KEY (`user_id`),
+    UNIQUE KEY `i_email` (`email`)
+);
+
+create table `projects` (
+	`project_id` int(11) unsigned NOT NULL AUTO_INCREMENT, 
+    `project_name` varchar(50) NOT NULL,
+    `created_by_user_id` int(11) unsigned NOT NULL,
+    PRIMARY KEY (`project_id`),
+    UNIQUE KEY `i_project_name` (`project_name`)
+);
+
+create table `project_user_maps` (
+	`project_user_id` int(11) unsigned NOT NULL AUTO_INCREMENT, 
+    `project_id` int(11) unsigned NOT NULL,
+    `user_id` int(11) unsigned NOT NULL,
+    PRIMARY KEY (`project_user_id`),
+    UNIQUE KEY `i_project_user` (`project_id`,`user_id`)
+);
+
+create table `daybook` (
+	`daybook_id` int(12) unsigned NOT NULL AUTO_INCREMENT, 
+    `user_id` int(11) unsigned NOT NULL,
+    `project_id` int(11) unsigned NOT NULL,
+    `date` datetime NOT NULL default CURRENT_TIMESTAMP,
+    `amount` decimal(8,2) NOT NULL,
+    `note` varchar(255) NOT NULL,
+    PRIMARY KEY (`daybook_id`),
+    KEY `i_user_id` (`user_id`),
+    KEY `i_date` (`date`)
+);
+
