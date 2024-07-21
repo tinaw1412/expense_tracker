@@ -2,7 +2,7 @@
 include_once '../DemoConn.php';
 $db=new DemoConn();
 
-$handle = fopen("../sq/0__db_structure.sql", "r");
+$handle = fopen("../sql/0__db_structure.sql", "r");
 if ($handle) {
     $sql="";
     while (($line = fgets($handle)) !== false) {
