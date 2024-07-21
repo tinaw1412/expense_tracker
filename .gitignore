@@ -2,3 +2,4 @@
 docker/.env
 php/.env
 php/vendor
+docker/ec2_key.pem
