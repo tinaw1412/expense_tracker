@@ -188,11 +188,25 @@ if (isset($_GET['page'])){
         ]);
     }else if ($action=='selectProject'){
         $projectId = $_POST['projectId'];
-        $_SESSION['projectId'] = $projectId;
+        $sql = "select 1 from project_user_maps where project_id = ? and user_id =  ?;";
+        $data = $db->select($sql,[$projectId,$_SESSION["user_id"]]);
+        if (count($data)==1){
+            $_SESSION['projectId'] = $projectId;
+            
+            $status=true;
+            $msg='Project set successfully';
+        }else if ($projectId!=0){
+            $status=false;
+            $msg="Failed to select project";
+        }else{
+            $status=true;
+        }
+
         echo json_encode([
-            'status' => true, 
-            'message' => 'Project set successfully'
+            'status' => $status, 
+            'msg' => $msg
         ]);
+        
 
     }
 }
