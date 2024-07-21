@@ -14,6 +14,7 @@ if ($handle) {
     while (($line = fgets($handle)) !== false) {
         // process the line read.
         $sql .= $line;
+        var_dump($line);
         if (str_ends_with($line, ';')){
             echo "executing $sql".PHP_EOL;
             $db->exec($sql);
