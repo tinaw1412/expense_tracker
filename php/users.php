@@ -200,6 +200,7 @@ if (isset($_GET['page'])){
             $msg="Failed to select project";
         }else{
             $status=true;
+            $msg= "";
         }
 
         echo json_encode([
