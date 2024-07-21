@@ -23,7 +23,6 @@ class Mail
             $mail->Username = $_ENV['mail_user'];//SMTP username
             $mail->Password = $_ENV['mail_password'];//SMTP password
 
-            //$mail->setFrom('jingnan1412@gmail.com', 'tina');
             $mail->addAddress($to);
 
             $mail->isHTML(true);//Set email format to HTML
