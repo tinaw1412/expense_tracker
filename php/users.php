@@ -142,7 +142,8 @@ if (isset($_GET['page'])){
         try {
             $db->exec($sql,$params);
             if ($signup){
-                $body="<a href='http://www.tina.test/users.php?action=confirm&token=$token'>Confirm your email</a>";
+                $url=$_ENV['web_url'];
+                $body="<a href='$url/users.php?action=confirm&token=$token'>Confirm your email</a>";
                 $resultSendMail=Mail::send($_POST['email'],"Confirm your email",$body);
             }else{
                 $resultSendMail=null;
