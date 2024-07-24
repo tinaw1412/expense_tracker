@@ -45,8 +45,8 @@ function getAllData($db,$projectId){
             $out=$avg-$paid;
             $in=0;
         }
-        $amount['in']=$in;
-        $amount['out']=$out;
+        $amount['in']=round($in,2);
+        $amount['out']=round($out,2);
     };
 
 
