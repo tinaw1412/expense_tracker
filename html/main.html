@@ -10,70 +10,73 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery.js"></script>
-    <style>
-        html,
-        body {
-            height: 100%;
-        }
-
-        body {
-            display: flex;
-            flex-direction: column;
-        }
-
-        main {
-            flex: 1;
-        }
-    </style>
 </head>
 </head>
 
 <body>
+    <div class="container-fluid">
+        <div class="row">
+            <header class="p-3  text-bg-dark">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <a href="/" class="d-flex align-items-center mb-2 text-white text-decoration-none">
+                        <img src="image/spending.png">
+                    </a>
 
-    <header class="p-3 mb-3 text-bg-dark">
-        <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center mb-2 text-white text-decoration-none">
-                    <img src="image/spending.png">
-                </a>
+                    <ul class="nav col-lg-auto me-lg-auto navbar-expand-sm mb-2 justify-content-center mb-md-0">
+                        <li class="fw-bold"><a href="/" class="nav-link px-2 text-white">Home</a></li>
+                        <li><a href="#" class="nav-link px-2 text-white a_menu user_menu" data-page="users">Users</a>
+                        </li>
+                        <li><a href="#" class="nav-link px-2 text-white a_menu user_menu"
+                                data-page="projects">Projects</a>
+                        </li>
+                        <li><a href="#" class="nav-link px-2 text-white a_menu user_menu"
+                                data-page="expenses">Expenses</a>
+                        </li>
+                        <li><a href="#" class="nav-link px-2 text-white a_menu user_menu"
+                                data-page="reports">Reports</a>
+                        </li>
+                        <li><a href="#" class="nav-link px-2 text-white a_menu" data-page="about">About</a></li>
+                    </ul>
 
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li class="fw-bold"><a href="/" class="nav-link px-2 text-white">Home</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white a_menu user_menu" data-page="users">Users</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white a_menu user_menu" data-page="projects">Projects</a>
-                    </li>
-                    <li><a href="#" class="nav-link px-2 text-white a_menu user_menu" data-page="expenses">Expenses</a>
-                    </li>
-                    <li><a href="#" class="nav-link px-2 text-white a_menu user_menu" data-page="reports">Reports</a>
-                    </li>
-                    <li><a href="#" class="nav-link px-2 text-white a_menu" data-page="about">About</a></li>
-                </ul>
-                <div class="me-2 text-end">
-                <select class="form-select" id="projectsSelect" name="projectname">
+                    <div class="me-2 text-end">
+                        <!--
+                        <select class="form-select " id="projectsSelect" name="projectname">
+                            <option value="1">Project1</option>
+                            <option value="2">Project2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>-->
+
+                        <span class="badge bg-success me-2" id="emailBadge">User email</span>
+
+                        <button type="button" class="btn btn-outline-light me-2" data-bs-toggle='modal'
+                            data-bs-target="#loginModal" id="loginUserBtn">Login</button>
+                        <button type="button" class="btn btn-outline-light me-2" id="logoutBtn">Logout</button>
+                        <button type="button" class="btn btn-outline-light btn-primary" id="signupBtn"
+                            data-bs-toggle='modal' data-bs-target="#signupModal">Sign-up</button>
+
+                    </div>
+            </header>
+
+        </div>
+
+        <div class="row">
+            <div class="input-group bg-success mb-3 py-2" id="projectsMenu">
+                <label class="input-group-text bg-success text-white border-dark" for="projectsSelect">Select
+                    Project:</label>
+                <select class="form-select bg-success border-dark text-white" id="projectsSelect" name="projectname">
                     <option value="1">Project1</option>
                     <option value="2">Project2</option>
-                    <option>3</option>
-                    <option>4</option>
+                    <option value="3">Project3</option>
+                    <option value="4">Project4</option>
                 </select>
-                </div>
-
-                <div class="text-end">
-                    <span class="badge bg-success me-2" id="emailBadge">User email</span>
-
-                    <button type="button" class="btn btn-outline-light me-2" data-bs-toggle='modal'
-                        data-bs-target="#loginModal" id="loginUserBtn">Login</button>
-                    <button type="button" class="btn btn-outline-light me-2" id="logoutBtn">Logout</button>
-                    <button type="button" class="btn btn-outline-light btn-primary" id="signupBtn"
-                        data-bs-toggle='modal' data-bs-target="#signupModal">Sign-up</button>
-                </div>
             </div>
         </div>
-    </header>
 
-    <main role="main">
-        <div class="container" id="content">
-            <h3>Welcome to the Online Expenses Tracker! <br>
-                Please sign-up to access the pages! </h3>
+        <div class="row">
+            <div class="container mt-3 col-12" id="content">
+                <h3>Welcome to the Online Expenses Tracker! <br>
+                    Please sign-up to access the pages! </h3>
                 <div class="card mb-4">
                     <div class="card-body">
                         <h5 class="card-title">Demo instructions</h5>
@@ -82,33 +85,36 @@
                         <p class="card-text">User password: demo123</p>
                     </div>
                 </div>
-        </div>
-    </main>
-
-
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <div class="col-md-4 d-flex align-items-center">
-            <a href="/" class="mb-3 ms-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-                <img src="image/spending.png">
-            </a>
-            <span class="mb-3 mb-md-0 text-body-secondary">© Jingnan Wang</span>
+            </div>
         </div>
 
-        <ul class="nav col-md-4 me-3 justify-content-end">
-            <li><a href="/" class="nav-link px-2 text-body-secondary">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary a_menu user_menu"
-                    data-page="users">Users</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary a_menu user_menu"
-                    data-page="projects">Projects</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary a_menu user_menu"
-                    data-page="expenses">Expenses</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary a_menu user_menu"
-                    data-page="reports">Reports</a>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary a_menu"
-                    data-page="about">About</a></li>
-        </ul>
+        <div class="row">
+            <footer
+                class="col-12 fixed-bottom d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+                <div class="col-md-4 d-flex align-items-center">
+                    <a href="/" class="mb-3 ms-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                        <img src="image/spending.png">
+                    </a>
+                    <span class="mb-3 mb-md-0 text-body-secondary">© Jingnan Wang</span>
+                </div>
 
-    </footer>
+                <ul class="nav col-md-4 me-3 justify-content-end">
+                    <li><a href="/" class="nav-link px-2 text-body-secondary">Home</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary a_menu user_menu"
+                            data-page="users">Users</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary a_menu user_menu"
+                            data-page="projects">Projects</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary a_menu user_menu"
+                            data-page="expenses">Expenses</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary a_menu user_menu"
+                            data-page="reports">Reports</a>
+                    <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary a_menu"
+                            data-page="about">About</a></li>
+                </ul>
+
+            </footer>
+        </div>
+    </div>
 
     <!--login modal-->
     <div class="modal" id="loginModal">
@@ -189,13 +195,15 @@
 
 <script>
     var loggedEmail = null;
-    var currentOption=null;
+    var currentOption = null;
+    var ifLogged = null;
+
     function loadPage(option) {
         $("#content").load(option + ".html");
-        currentOption=option;
+        currentOption = option;
     }
     function refreshPage() {
-        if (currentOption){
+        if (currentOption) {
             loadPage(currentOption);
         }
     }
@@ -208,8 +216,12 @@
             success: function (data, textStatus, jqXHR) {
                 loggedEmail = data.loggedEmail;
                 setLoginState(data.status);
+                ifLogged = data.status;
+
                 //if session(project) only do when user logging and projects exist
-                if (data.status){
+                if (data.status) {
+                    $('#projectsMenu').hide();
+
                     $('#projectsSelect').empty();
 
                     let newOption = $('<option>');
@@ -223,7 +235,7 @@
                         newOption.val(pr.project_id);
                         $('#projectsSelect').append(newOption);
 
-                        console.log("projectID:"+pr.project_id);
+                        console.log("projectID:" + pr.project_id);
 
                     });
 
@@ -239,7 +251,7 @@
             $('#emailBadge').html(loggedEmail);
             $('#emailBadge').show();
 
-            $('#projectsSelect').show();
+            //$('#projectsSelect').show();
             $(".user_menu").removeClass("disabled");
             $("#loginUserBtn").hide();
             $("#logoutBtn").show();
@@ -247,7 +259,7 @@
             $('#emailBadge').html("");
             $('#emailBadge').hide();
 
-            $('#projectsSelect').hide();
+            $('#projectsMenu').hide();
 
             $(".user_menu").addClass("disabled");
             $("#loginUserBtn").show();
@@ -285,10 +297,16 @@
 
     $(document).ready(function () {
         getLoginUser();
-        
+
         $(".a_menu").click(function (e) {
             //e.preventDefault();
+            if (($(this).data("page") == "expenses" || $(this).data("page") == "reports") && ifLogged == true) {
+                $('#projectsMenu').show();
+            } else {
+                $('#projectsMenu').hide();
+            }
             loadPage($(this).data("page"));
+
         });
 
         $('#projectsSelect').change(function (e) {
@@ -303,15 +321,15 @@
                 },
                 dataType: "json",
                 success: function (data, textStatus, jqXHR) {
-                    if (data.status==true){
+                    if (data.status == true) {
                         refreshPage();
                         console.log('Selected project:', selectedProjectId);
-                    }else{
+                    } else {
                         alert(data.msg);
                     }
                 }
             });
-            
+
         });
     });
 
@@ -332,6 +350,7 @@
             success: function (data, textStatus, jqXHR) {
                 if (data.status == true) {
                     loggedEmail = email;
+                    ifLogged = true;
                     getLoginUser();
                     setLoginState(true);
                 } else {
@@ -355,6 +374,7 @@
             success: function (data, textStatus, jqXHR) {
                 if (data.status == true) {
                     setLoginState(false);
+                    ifLogged = false;
                 } else {
                     alert(data.msg);
                 }
