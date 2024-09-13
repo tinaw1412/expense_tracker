@@ -22,7 +22,9 @@ class Mail
             $mail->Host = $_ENV['mail_host'];//Set the SMTP server to send through
             $mail->Username = $_ENV['mail_user'];//SMTP username
             $mail->Password = $_ENV['mail_password'];//SMTP password
-
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Enable TLS encryption, `ssl` also accepted
+            $mail->Port = 587; 
+            
             $mail->addAddress($to);
 
             $mail->isHTML(true);//Set email format to HTML
