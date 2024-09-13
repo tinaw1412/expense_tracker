@@ -24,7 +24,8 @@ class Mail
             $mail->Password = $_ENV['mail_password'];//SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Enable TLS encryption, `ssl` also accepted
             $mail->Port = 587; 
-            
+
+            $mail->setFrom('jingnan1412@gmail.com', 'No reply'); // Replace with your "From" address
             $mail->addAddress($to);
 
             $mail->isHTML(true);//Set email format to HTML
