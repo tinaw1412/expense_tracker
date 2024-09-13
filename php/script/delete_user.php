@@ -7,8 +7,8 @@ if (count($argv)==2){
     $sql="delete from users where email=?";
     $result=$db->exec($sql,[$email]);
 
-    echo "User deleted: $result";
+    echo "User deleted: $result".PHP_EOL;
 
 }else{
-    echo "Please enter email to be deleted only";
+    echo "Please enter email to be deleted only".PHP_EOL;
 }
