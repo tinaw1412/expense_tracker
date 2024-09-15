@@ -21,6 +21,7 @@ EC2 stop and start will case public ip changed, so we need a static/elastic IP
 ssh -i ec2_key.pem ubuntu@18.216.188.233
 ssh -i ec2_key.pem ubuntu@13.59.138.37
 
-### demo
+### ec2 demo
 http://ec2-13-59-138-37.us-east-2.compute.amazonaws.com
 http://18.216.188.233
+http://coding-abc.com
