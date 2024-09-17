@@ -125,7 +125,7 @@ if (isset($_GET['page'])){
         }else{
             //sign up action
             $signup=true;
-            $sql="insert into users (email,full_name,password,status,confirmEmailToken) values(?,?,?,0,?);";
+            $sql="insert into users (email,full_name,password,status,confirmEmailToken) values(?,?,?,?,?);";
             $password=$_POST['password'];
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $token=uniqid();
@@ -134,6 +134,7 @@ if (isset($_GET['page'])){
                 $_POST['email'],
                 $_POST['fullname'],
                 $hashed_password,
+                $_ENV['verify_email'] ? 0 : 1,
                 $token,
             ];
             
@@ -144,7 +145,12 @@ if (isset($_GET['page'])){
             if ($signup){
                 $url=$_ENV['web_url'];
                 $body="<a href='$url/users.php?action=confirm&token=$token'>Confirm your email</a>";
-                $resultSendMail=Mail::send($_POST['email'],"Confirm your email",$body);
+                if ($_ENV['verify_email']){
+                    $resultSendMail=Mail::send($_POST['email'],"Confirm your email",$body);
+                }else{
+                    $resultSendMail=null;
+                }
+            
             }else{
                 $resultSendMail=null;
             }
