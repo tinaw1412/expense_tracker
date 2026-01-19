@@ -23,3 +23,4 @@ ssh -i ec2_key.pem ubuntu@18.216.188.233
 ### ec2 demo
 http://18.216.188.233
 http://coding-abc.com
+(currently offline)
